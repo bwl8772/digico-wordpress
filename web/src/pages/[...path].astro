@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PortableBody from '../components/PortableBody.astro'
+import { urlFor } from '../lib/image'
+import {
+  getRoutableContentByPath,
+  getRoutableContentPaths,
+  isCorePagePath,
+  normalizeSitePath,
+  paramFromSitePath,
+} from '../lib/sanity'
+
+export async function getStaticPaths() {
+  const items = await getRoutableContentPaths().catch(() => [])
+  const routes = new Map<string, (typeof items)[number]>()
+
+  for (const item of items) {
+    const path = normalizeSitePath(item.path)
+    if (isCorePagePath(path)) continue
+
+    const param = paramFromSitePath(path)
+    if (!param) continue
+
+    const existing = routes.get(param)
+    if (existing) {
+      throw new Error(
+        `Sanity route collision at ${path}: ${existing._type} ${existing._id} and ${item._type} ${item._id}`,
+      )
+    }
+    routes.set(param, item)
+  }
+
+  return [...routes.keys()].map((path) => ({ params: { path } }))
+}
+
+const path = normalizeSitePath(Astro.params.path)
+const doc = await getRoutableContentByPath(path)
+const heroSrc = doc?.heroImage?.asset ? urlFor(doc.heroImage).width(1600).url() : null
+---
+
+{!doc ? (
+  <BaseLayout title="Not found | Digital Command">
+    <main>
+      <h1>Page not found</h1>
+      <p>This path is not in Sanity yet. Check the WordPress URL inventory before adding a redirect.</p>
+      <p><a href="/">Back to home</a></p>
+    </main>
+  </BaseLayout>
+) : (
+  <BaseLayout title={doc.title} description={doc.excerpt} seo={doc.seo}>
+    <article>
+      {heroSrc && (
+        <p class="hero">
+          <img src={heroSrc} alt={doc.heroImage?.alt || ''} />
+        </p>
+      )}
+      <h1>{doc.title}</h1>
+      {doc._type === 'post' && (
+        <p class="meta">
+          {doc.authorName}
+          {doc.publishedAt && ` · ${new Date(doc.publishedAt).toLocaleDateString('en-US')}`}
+        </p>
+      )}
+      <PortableBody value={doc.body} />
+    </article>
+  </BaseLayout>
+)}

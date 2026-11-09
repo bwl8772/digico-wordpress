@@ -1,0 +1,40 @@
+---
+import '../styles/global.css'
+
+interface Seo {
+  title?: string | null
+  description?: string | null
+  canonicalUrl?: string | null
+  noIndex?: boolean | null
+}
+
+interface Props {
+  title: string
+  description?: string | null
+  seo?: Seo | null
+}
+
+const { title, description, seo } = Astro.props
+const pageTitle = seo?.title || title
+const pageDescription = seo?.description || description || ''
+const canonical = seo?.canonicalUrl || new URL(Astro.url.pathname, Astro.site).toString()
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    {pageDescription && <meta name="description" content={pageDescription} />}
+    <link rel="canonical" href={canonical} />
+    {seo?.noIndex && <meta name="robots" content="noindex, nofollow" />}
+  </head>
+  <body>
+    <div class="wrap">
+      <slot />
+    </div>
+  </body>
+</html>

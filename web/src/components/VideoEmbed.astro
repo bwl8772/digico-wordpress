@@ -1,0 +1,40 @@
+---
+interface Props {
+  node: {
+    title?: string | null
+    url?: string | null
+    captionUrl?: string | null
+  }
+}
+
+const { node } = Astro.props
+const url = node.url || ''
+const isYouTube = /youtube\.com|youtu\.be/.test(url)
+const isVimeo = /vimeo\.com/.test(url)
+const youtubeId = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/)?.[1]
+const vimeoId = url.match(/vimeo\.com\/(?:video\/)?(\d+)/)?.[1]
+---
+
+{isYouTube && youtubeId ? (
+  <figure>
+    <iframe
+      src={`https://www.youtube.com/embed/${youtubeId}`}
+      title={node.title || 'YouTube video'}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+    />
+  </figure>
+) : isVimeo && vimeoId ? (
+  <figure>
+    <iframe
+      src={`https://player.vimeo.com/video/${vimeoId}`}
+      title={node.title || 'Vimeo video'}
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+    />
+  </figure>
+) : url ? (
+  <p><a href={url}>{node.title || url}</a></p>
+) : null}

@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getPosts } from '../../lib/sanity'
+
+const posts = await getPosts().catch(() => [])
+---
+
+<BaseLayout title="Blog | Digital Command" description="Digital Command articles.">
+  <main>
+    <h1>Blog</h1>
+    {posts.length === 0 ? (
+      <p>No posts in Sanity yet. WordPress remains the live blog until import and cutover.</p>
+    ) : (
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={post.path}>{post.title}</a>
+            {post.publishedAt && (
+              <div class="meta">{new Date(post.publishedAt).toLocaleDateString('en-US')}</div>
+            )}
+            {post.excerpt && <p>{post.excerpt}</p>}
+          </li>
+        ))}
+      </ul>
+    )}
+  </main>
+</BaseLayout>
