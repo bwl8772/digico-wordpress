@@ -1,0 +1,204 @@
+{
+  "post": {
+    "id": 6058,
+    "date": "2024-11-15T07:42:00",
+    "date_gmt": "2024-11-15T07:42:00",
+    "guid": {
+      "rendered": "https://digitalcommand.co/?p=6058"
+    },
+    "modified": "2025-01-29T16:13:03",
+    "modified_gmt": "2025-01-29T16:13:03",
+    "slug": "ai-cybersecurity-impact",
+    "status": "publish",
+    "type": "post",
+    "link": "https://digitalcommand.co/ai-cybersecurity-impact/",
+    "title": {
+      "rendered": "Cybersecurity Impact: Uncover 3 Powerful Ways AI is Transforming Resilience"
+    },
+    "content": {
+      "rendered": "\n<hr class=\"wp-block-separator has-alpha-channel-opacity is-style-dots\" style=\"margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--50)\"/>\n\n\n\n<p class=\"wp-block-paragraph\">Cybersecurity threats continue to grow more complex, and cybersecurity impact is shifting from a purely IT-based concern to a core business issue. With digital transformation making nearly every business function accessible via the cloud, cybersecurity is no longer confined to back-office IT but is now critical across all business roles. This shift requires every employee to understand and participate in security practices as they develop, deploy, and maintain business tools—a skill set once exclusive to cybersecurity professionals but now essential for everyone in a digital-first economy.</p>\n\n\n\n<p class=\"wp-block-paragraph\">As Artificial Intelligence (AI) continues to evolve, it&#8217;s rapidly changing the landscape of traditional business functions. One of the most significant impacts lies in the integration of AI-powered automation within line-of-business (LOB) roles. Increasingly, non-IT workers are finding themselves with direct access to powerful, automated tools for developing and deploying business solutions—capabilities that used to be exclusively handled by IT and security teams. With this <a href=\"https://drbrianlambert.com/data-maturity-assessment-level-1/\" target=\"_blank\" rel=\"noreferrer noopener\">new level of autonomy</a> comes a shift left-shift right paradigm, where LOB employees are expected to play an active role in cybersecurity, influencing practices from the early stages of product design through to post-deployment monitoring. The old mentality of “that’s what the IT Security and DevOps guys do is no longer workable or scalable.</p>\n\n\n\n<h4 class=\"wp-block-heading\"><strong>Understanding the Shift Left-Shift Right Paradigm in Cybersecurity</strong></h4>\n\n\n\n<p class=\"wp-block-paragraph\">In cybersecurity, “<strong>shift left</strong>” means integrating security practices earlier in the development process—specifically during design and pre-production stages. Traditionally, this has been the realm of software developers and IT security teams, who work to embed secure practices into every layer of system architecture. However, with AI automating certain aspects of application development, line-of-business workers are now positioned to take on some of these responsibilities, ensuring that cybersecurity impact isn’t overlooked in the applications they create or use.</p>\n\n\n\n<p class=\"wp-block-paragraph\">On the other hand, “<strong>shift right</strong>” refers to extending security practices beyond deployment, actively monitoring and securing applications in their live environment. LOB workers, <a href=\"https://digitalcommand.co/rise-of-the-purple-collar-worker/\" data-type=\"post\" data-id=\"4394\">especially purple-collar workers</a>, with their hands on AI-powered tools and automation platforms, are increasingly responsible for monitoring applications after they go live, recognizing and responding to any suspicious or malicious activity.</p>\n\n\n\n<figure class=\"wp-block-image size-large\"><img fetchpriority=\"high\" decoding=\"async\" width=\"1024\" height=\"585\" src=\"https://digitalcommand.co/wp-content/uploads/2025/01/Cybersecurity-2-1024x585.png\" alt=\"cybersecurity impact\" class=\"wp-image-6063\" title=\"\" srcset=\"https://digitalcommand.co/wp-content/uploads/2025/01/Cybersecurity-2-1024x585.png 1024w, https://digitalcommand.co/wp-content/uploads/2025/01/Cybersecurity-2-300x171.png 300w, https://digitalcommand.co/wp-content/uploads/2025/01/Cybersecurity-2-768x439.png 768w, https://digitalcommand.co/wp-content/uploads/2025/01/Cybersecurity-2-1536x878.png 1536w, https://digitalcommand.co/wp-content/uploads/2025/01/Cybersecurity-2.png 1792w\" sizes=\"(max-width: 1024px) 100vw, 1024px\" /></figure>\n\n\n\n<h4 class=\"wp-block-heading\"><strong>Why AI is Pushing Cybersecurity Left and Right in the LOB</strong></h4>\n\n\n\n<p class=\"wp-block-paragraph\">AI is transforming the business landscape by making automation more accessible to non-technical teams. AI-fueled low-code and no-code platforms empower line-of-business workers to create custom workflows, deploy applications, and manage business processes without waiting for IT. However, the same simplicity that makes AI accessible also brings cybersecurity vulnerabilities closer to the surface. The shift left-shift right paradigm becomes essential as LOB workers need to embed cybersecurity impact into their work at the beginning (shift left) and stay vigilant throughout the application lifecycle (shift right).</p>\n\n\n\n<p class=\"wp-block-paragraph\">This shift isn’t just about convenience; it’s a necessity. With LOB employees creating applications and configuring AI systems independently, traditional security bottlenecks are replaced by the need for more pervasive cybersecurity impact across all roles. Organizations can no longer rely solely on IT teams to monitor and secure every application or workflow—LOB employees must be active participants in maintaining a secure environment.</p>\n\n\n\n<h4 class=\"wp-block-heading\"><strong>Key Areas Where LOB Employees Need to Have Positive Cybersecurity</strong> <strong>Impact</strong></h4>\n\n\n\n<ol class=\"wp-block-list\">\n<li style=\"margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--50)\"><strong>Early-Stage Security Practices (Shift Left)</strong><strong><br></strong>LOB workers now play a role in early-stage security measures, such as data protection and privacy considerations in AI-powered workflows. They should be equipped to:\n<ul class=\"wp-block-list\">\n<li>Use data masking and encryption tools within applications.</li>\n\n\n\n<li>Understand data governance requirements, ensuring only necessary data is collected and processed.</li>\n\n\n\n<li>Incorporate authentication and role-based access within any new applications they build or manage.</li>\n</ul>\n</li>\n\n\n\n<li style=\"margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--50)\"><strong>Continuous Monitoring and Incident Response (Shift Right)</strong><strong><br></strong>As LOB teams oversee AI-driven processes in live environments, they are ideally positioned to spot abnormalities or suspicious activity. Key responsibilities include:\n<ul class=\"wp-block-list\">\n<li>Monitoring user behaviors and usage patterns to identify potential security threats.</li>\n\n\n\n<li>Using AI-driven anomaly detection tools that flag unusual actions, such as unauthorized access or data leaks.</li>\n\n\n\n<li>Collaborating with security teams if issues arise, acting as the “eyes and ears” on the ground for detecting threats early.</li>\n</ul>\n</li>\n\n\n\n<li style=\"margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--50)\"><strong>Secure Use of AI and Automation Tools</strong><strong><br></strong>Since AI-driven platforms grant significant capabilities, LOB employees need to understand best practices for secure usage:\n<ul class=\"wp-block-list\">\n<li>Avoid using sensitive or personally identifiable information (PII) within AI models unless encrypted or anonymized.</li>\n\n\n\n<li>Regularly update software to ensure any vulnerabilities in AI tools are patched.</li>\n\n\n\n<li>Apply access control, ensuring only authorized users can access sensitive AI-powered workflows.</li>\n</ul>\n</li>\n</ol>\n\n\n\n<h4 class=\"wp-block-heading\"><strong>Cultivating a Security-First Mindset: Training and Empowerment for LOB Employees</strong></h4>\n\n\n\n<p class=\"wp-block-paragraph\">AI may be the driving force behind automation, but human involvement is still critical for positive cybersecurity impact. Organizations must prioritize cybersecurity training for LOB teams, covering key areas such as data handling, secure application configuration, and cyber hygiene best practices. By fostering a culture where security is a shared responsibility, businesses can empower all employees to contribute to a safer, more secure operational environment.</p>\n\n\n\n<p class=\"wp-block-paragraph\">At a practical level, organizations can support this shift by:</p>\n\n\n\n<ul class=\"wp-block-list\">\n<li style=\"margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--50)\">Implementing training programs focused on secure use of AI and automation tools.</li>\n\n\n\n<li style=\"margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--50)\">Providing resources and tools for LOB employees to self-audit their applications and workflows for security vulnerabilities.</li>\n\n\n\n<li style=\"margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--50)\">Encouraging open channels of communication between LOB teams and IT/security teams, enabling fast and effective responses to potential threats.</li>\n</ul>\n\n\n\n<h3 class=\"wp-block-heading\"><strong>Conclusion: A New Era of Cybersecurity Awareness in the Line of Business</strong></h3>\n\n\n\n<p class=\"wp-block-paragraph\">As AI blurs the lines between IT and business roles, a shift left-shift right approach to cybersecurity is no longer optional. LOB employees are becoming pivotal to maintaining cybersecurity in their day-to-day activities, and the future success of automation initiatives depends on their vigilance. By embedding security awareness across the board, businesses can not only protect sensitive data but also enhance their resilience to cyber threats. In this new paradigm, security is everyone’s responsibility, and AI-powered automation serves as both a challenge and an opportunity to elevate cybersecurity from the ground up.</p>\n\n\n\n<p class=\"wp-block-paragraph\">In the age of AI, cybersecurity impact must be an organization-wide effort—one that starts with every line-of-business worker embracing their role in protecting company assets.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Ready to lead in a digital-first world? Check out the <a href=\"https://digitalcommand.co/\">Digital Command</a> <a href=\"https://digitalcommand.co/digital-academy/\" data-type=\"page\" data-id=\"1475\">Academy</a> and gain the cybersecurity skills to protect and drive your business forward. Enroll today!&#8221;<br></p>\n\n\n\n<p class=\"wp-block-paragraph\"></p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Cybersecurity threats continue to grow more complex, and cybersecurity impact is shifting from a purely IT-based concern to a core business issue. With digital transformation making nearly every business function accessible via the cloud, cybersecurity is no longer confined to back-office IT but is now critical across all business roles. This shift requires every employee [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 6,
+    "featured_media": 6062,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "site-sidebar-layout": "default",
+      "site-content-layout": "",
+      "ast-site-content-layout": "default",
+      "site-content-style": "default",
+      "site-sidebar-style": "default",
+      "ast-global-header-display": "",
+      "ast-banner-title-visibility": "",
+      "ast-main-header-display": "",
+      "ast-hfb-above-header-display": "",
+      "ast-hfb-below-header-display": "",
+      "ast-hfb-mobile-header-display": "",
+      "site-post-title": "",
+      "ast-breadcrumbs-content": "",
+      "ast-featured-img": "",
+      "footer-sml-layout": "",
+      "ast-disable-related-posts": "",
+      "theme-transparent-header-meta": "",
+      "adv-header-id-meta": "",
+      "stick-header-meta": "",
+      "header-above-stick-meta": "",
+      "header-main-stick-meta": "",
+      "header-below-stick-meta": "",
+      "astra-migrate-meta-layouts": "default",
+      "ast-page-background-enabled": "default",
+      "ast-page-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-4)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ast-content-background-meta": {
+        "desktop": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "tablet": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        },
+        "mobile": {
+          "background-color": "var(--ast-global-color-5)",
+          "background-image": "",
+          "background-repeat": "repeat",
+          "background-position": "center center",
+          "background-size": "auto",
+          "background-attachment": "scroll",
+          "background-type": "",
+          "background-media": "",
+          "overlay-type": "",
+          "overlay-color": "",
+          "overlay-opacity": "",
+          "overlay-gradient": ""
+        }
+      },
+      "ep_exclude_from_search": false,
+      "footnotes": ""
+    },
+    "categories": [
+      82
+    ],
+    "tags": [
+      83
+    ],
+    "class_list": [
+      "post-6058",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-resilience",
+      "tag-cyber"
+    ]
+  },
+  "meta": {
+    "ekit_post_views_count": "351",
+    "wpil_sync_report3": "1",
+    "wpil_links_inbound_internal_count": "0",
+    "wpil_links_inbound_internal_count_data": "eJxLtDKwqq4FAAZPAf4=",
+    "wpil_links_outbound_internal_count": "3",
+    "wpil_links_outbound_internal_count_data": "eJzdUk1PKzEM/CtV7ku7yxaoe0JwfF83jpFJ0tYiTVaJV6hC/e/PaUoFQuLAoUjcYseemUwG4RJeCGbLv9DOQT0M5PXvaJ3Xvyg8KWhn8JLhGpSXUpNVyzKcZUuNySs5zRegNsxDhunU0poYvYnbLQZ7YeI0UXZNXDW8cc0wpsG7xkTvMTXPMT25NC0QvSDEzOXYCtUHlHJxA4oCuxRQWB+hrWvDYe2D9n+lDW1XtHeyeJDdXy76ohcUE3unln8qBu8Gp97CZbgClRl5zHVINJko5IFrPa925BNE9uO6FrJpPJnXu5sDJjHFUBtFaExrDGQ0J1ytyJwWnSWO6TjXgkKz0m9494chDGZThuQL5GUuD84Qer+bvHN3Ut3N6kiJ1jqrH3d6EKUUioOzKs9Hg1Xe+3eKcbPjrz9vSGiSNskhu1MEikTKGkeOZay29yRf8+UsdVefZel8UWkXbfeTolKg7qtVk7vq1Xcko/t6Mvrus2QcOw0atG67O2dS+uv5T0qKqLqtJp4/IPv/OyIeCQ==",
+    "wpil_links_outbound_external_count": "1",
+    "wpil_links_outbound_external_count_data": "eJxlkMtuxCAMRX8lYp8mTJ/y/EIfyy6RE9zGKjEROB1Fo/n3QvrYdGfw9T3XRrBwZuiPL2BvwbwuHNxT9BTcI8uHAdvDOcM9mFCejr05VnGGazBrCqZUdz2YSXXJ0HU+DYlRAs4DJb0a49x5VGxn1DWxbi3mTDnPJNoG+qTQ2q563BSLmLWW9gHMf5vaKQ0WpSRYuMOeoswt+9xzDQIGZZxiquKDBSN0anZKE98aXDVKnLedUTZF78m7YXNLWN9Zfh0LJMQRlaNUZVl8jAUqe7ZD/3OH08R5oeTGRKj0dxRboJxdRVXZ9/fl8gXcyXZj",
+    "wpil_sync_report2_time": "2025-01-29T16:13:04+00:00"
+  },
+  "terms": {
+    "category": [
+      {
+        "id": 82,
+        "name": "Resilience",
+        "slug": "resilience"
+      }
+    ],
+    "post_tag": [
+      {
+        "id": 83,
+        "name": "Cyber",
+        "slug": "cyber"
+      }
+    ]
+  },
+  "thumbnail": {
+    "id": 6062,
+    "source_url": "https://digitalcommand.co/wp-content/uploads/2025/01/Cybersecurity-1.png",
+    "alt_text": "cybersecurity impact"
+  },
+  "author": {
+    "id": 6,
+    "name": "Brad Southwell",
+    "slug": "brad_southwell"
+  }
+}

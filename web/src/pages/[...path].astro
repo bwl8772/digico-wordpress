@@ -11,7 +11,7 @@ import {
 } from '../lib/sanity'
 
 export async function getStaticPaths() {
-  const items = await getRoutableContentPaths().catch(() => [])
+  const items = await getRoutableContentPaths()
   const routes = new Map<string, (typeof items)[number]>()
 
   for (const item of items) {
@@ -35,7 +35,12 @@ export async function getStaticPaths() {
 
 const path = normalizeSitePath(Astro.params.path)
 const doc = await getRoutableContentByPath(path)
-const heroSrc = doc?.heroImage?.asset ? urlFor(doc.heroImage).width(1600).url() : null
+const heroSrc = doc?.heroImage?.asset
+  ? urlFor(doc.heroImage).width(1600).url()
+  : doc?.legacyFeaturedImageUrl || null
+const legacyHtml = doc?.legacyHtml
+  ?.replace(/href=(['"])https?:\/\/command\s+academy\/?\1/gi, 'href=$1/digital-academy$1')
+  .replace(/href=(['"])#\1(?=>Digital Command<\/a>)/gi, 'href=$1/$1')
 ---
 
 {!doc ? (
@@ -48,20 +53,20 @@ const heroSrc = doc?.heroImage?.asset ? urlFor(doc.heroImage).width(1600).url() 
   </BaseLayout>
 ) : (
   <BaseLayout title={doc.title} description={doc.excerpt} seo={doc.seo}>
-    <article>
-      {heroSrc && (
-        <p class="hero">
-          <img src={heroSrc} alt={doc.heroImage?.alt || ''} />
-        </p>
-      )}
-      <h1>{doc.title}</h1>
+    <article class:list={['content-page', doc._type === 'post' ? 'blog-post' : 'marketing-page']}>
+      <header class:list={['page-hero', heroSrc && 'has-image']} style={heroSrc ? `--hero-image: url('${heroSrc}')` : undefined}>
+        <p class="eyebrow">{doc._type === 'post' ? 'Digital Command Blog' : 'Digital Command'}</p>
+        <h1>{doc.title}</h1>
       {doc._type === 'post' && (
         <p class="meta">
           {doc.authorName}
           {doc.publishedAt && ` · ${new Date(doc.publishedAt).toLocaleDateString('en-US')}`}
         </p>
       )}
-      <PortableBody value={doc.body} />
+      </header>
+      <div class="content-shell">
+        {legacyHtml ? <div class="prose legacy-html" set:html={legacyHtml} /> : <PortableBody value={doc.body} />}
+      </div>
     </article>
   </BaseLayout>
 )}

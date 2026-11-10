@@ -1,8 +1,13 @@
 :root {
-  color: #142033;
-  background: #f7f5f0;
-  font-family: Georgia, "Times New Roman", serif;
-  line-height: 1.6;
+  --navy: #160040;
+  --purple: #79018c;
+  --yellow: #fed647;
+  --ink: #17131d;
+  --muted: #6e6e6e;
+  color: var(--ink);
+  background: #fff;
+  font-family: "Encode Sans", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
 }
 
 *,
@@ -17,12 +22,8 @@ body {
   min-height: 100%;
 }
 
-body {
-  padding: 1.5rem;
-}
-
 a {
-  color: #0b4f6c;
+  color: var(--purple);
 }
 
 img {
@@ -36,9 +37,8 @@ iframe {
   border: 0;
 }
 
-.wrap {
-  max-width: 44rem;
-  margin: 0 auto;
+.site-main {
+  min-height: 55vh;
 }
 
 .prose :first-child {
@@ -50,7 +50,7 @@ iframe {
 }
 
 .meta {
-  color: #4d5a6a;
+  color: #757080;
   font-size: 0.95rem;
 }
 
@@ -62,4 +62,357 @@ iframe {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.site-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100px;
+  padding: 0 5.5vw;
+  color: #fff;
+  background: var(--navy);
+  border-bottom: 1px solid rgb(255 255 255 / 18%);
+}
+
+.site-logo img {
+  display: block;
+  width: 175px;
+  height: auto;
+}
+
+.primary-nav > ul,
+.submenu,
+.site-footer ul,
+.post-grid {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.primary-nav > ul {
+  display: flex;
+  align-items: center;
+  gap: 2.75rem;
+}
+
+.primary-nav li {
+  position: relative;
+}
+
+.primary-nav a,
+.submenu-toggle {
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.submenu-toggle {
+  padding: 0 0 0 0.35rem;
+  background: none;
+  border: 0;
+}
+
+.submenu {
+  position: absolute;
+  top: calc(100% + 1.25rem);
+  left: -1rem;
+  display: none;
+  width: 260px;
+  padding: 0.65rem 0;
+  background: #fff;
+  box-shadow: 0 18px 50px rgb(15 0 40 / 24%);
+}
+
+.submenu a {
+  display: block;
+  padding: 0.7rem 1rem;
+  color: var(--navy);
+  font-size: 0.75rem;
+}
+
+.submenu a:hover,
+.submenu a:focus-visible {
+  color: var(--purple);
+  background: #f6f1f8;
+}
+
+.nav-parent:hover .submenu,
+.nav-parent:focus-within .submenu,
+.nav-parent.is-open .submenu {
+  display: block;
+}
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  padding: 0.55rem;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 45%);
+}
+
+.nav-toggle > span:not(.sr-only) {
+  display: block;
+  height: 2px;
+  margin: 5px 0;
+  background: #fff;
+}
+
+.page-hero {
+  position: relative;
+  display: grid;
+  place-content: center;
+  min-height: 430px;
+  padding: 5rem max(1.5rem, 8vw);
+  color: #fff;
+  text-align: center;
+  background:
+    linear-gradient(150deg, rgb(22 0 64 / 94%), rgb(121 1 140 / 72%)),
+    var(--hero-image, none) center / cover no-repeat;
+}
+
+.page-hero h1 {
+  max-width: 1000px;
+  margin: 0 auto;
+  color: inherit;
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.page-hero .eyebrow {
+  color: #fff;
+}
+
+.page-hero .meta {
+  color: rgb(255 255 255 / 78%);
+}
+
+.compact-hero {
+  min-height: 360px;
+}
+
+.compact-hero > p:last-child {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.content-shell {
+  width: min(780px, calc(100% - 3rem));
+  margin: 0 auto;
+  padding: 5rem 0;
+}
+
+.prose {
+  color: #332e38;
+  font-size: 1.08rem;
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-top: 2em;
+  color: var(--navy);
+  font-weight: 900;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.prose figure {
+  margin: 2.5rem 0;
+}
+
+.legacy-html > :first-child {
+  margin-top: 0;
+}
+
+.legacy-html img {
+  height: auto;
+}
+
+.legacy-html iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.archive-page {
+  background: #f7f5f8;
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  width: min(1180px, calc(100% - 3rem));
+  margin: 0 auto;
+  padding: 5rem 0;
+}
+
+.post-card {
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.post-card-image {
+  display: block;
+  aspect-ratio: 12 / 7;
+  overflow: hidden;
+}
+
+.post-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.post-card-body {
+  padding: 1.6rem;
+  color: #fff;
+}
+
+.post-card-body > a {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.post-card-body .meta {
+  margin-top: 1rem;
+  color: rgb(255 255 255 / 68%);
+}
+
+.empty-state {
+  width: min(760px, calc(100% - 3rem));
+  margin: 0 auto;
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.site-footer {
+  padding: 5rem 6vw 1.5rem;
+  color: rgb(255 255 255 / 78%);
+  background: linear-gradient(150deg, var(--navy), var(--purple));
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 3rem;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.site-footer img {
+  width: 215px;
+}
+
+.site-footer h2 {
+  margin-top: 0;
+  color: #fff;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.site-footer li + li {
+  margin-top: 0.65rem;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-brand {
+  max-width: 460px;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.copyright {
+  max-width: 1180px;
+  padding-top: 2rem;
+  margin: 3rem auto 0;
+  font-size: 0.8rem;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    min-height: 84px;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .primary-nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: none;
+    padding: 1rem 1.5rem 2rem;
+    background: var(--navy);
+  }
+
+  .primary-nav.is-open {
+    display: block;
+  }
+
+  .primary-nav > ul {
+    display: block;
+  }
+
+  .primary-nav > ul > li {
+    padding: 0.7rem 0;
+  }
+
+  .submenu {
+    position: static;
+    width: auto;
+    margin-top: 0.75rem;
+    box-shadow: none;
+  }
+
+  .post-grid,
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .post-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero {
+    min-height: 320px;
+  }
 }

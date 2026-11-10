@@ -7,9 +7,16 @@
     "build": "npm run build --prefix web",
     "build:studio": "npm run build --prefix studio",
     "check": "npm run check --prefix web && npm run typecheck --prefix studio",
+    "sanity:prepare": "node scripts/build-sanity-import.mjs",
+    "sanity:preflight": "node --env-file=studio/.env --env-file=web/.env scripts/import-sanity.mjs",
+    "sanity:import": "node --env-file=studio/.env --env-file=web/.env scripts/import-sanity.mjs --commit",
+    "snapshot:core": "node scripts/import-wordpress-snapshots.mjs",
     "typegen": "npm run typegen --prefix studio"
   },
   "engines": {
-    "node": ">=22.23.4"
+    "node": ">=24.22.1 <25"
+  },
+  "volta": {
+    "node": "24.22.1"
   }
 }

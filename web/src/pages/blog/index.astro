@@ -1,24 +1,41 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import { urlFor } from '../../lib/image'
 import { getPosts } from '../../lib/sanity'
 
-const posts = await getPosts().catch(() => [])
+const posts = await getPosts()
 ---
 
 <BaseLayout title="Blog | Digital Command" description="Digital Command articles.">
-  <main>
-    <h1>Blog</h1>
+  <main class="archive-page">
+    <header class="page-hero compact-hero">
+      <p class="eyebrow">Digital Command</p>
+      <h1>Latest Posts</h1>
+      <p>Practical insight for leading, adapting, and building capability in the digital age.</p>
+    </header>
     {posts.length === 0 ? (
-      <p>No posts in Sanity yet. WordPress remains the live blog until import and cutover.</p>
+      <p class="empty-state">Connect the Digital Command Sanity project and run the WordPress import to publish blog posts here.</p>
     ) : (
-      <ul>
+      <ul class="post-grid">
         {posts.map((post) => (
-          <li>
+          <li class="post-card">
+            {(post.heroImage?.asset || post.legacyFeaturedImageUrl) && (
+              <a href={post.path} class="post-card-image" tabindex="-1">
+                <img
+                  src={post.heroImage?.asset
+                    ? urlFor(post.heroImage).width(720).height(420).fit('crop').url()
+                    : post.legacyFeaturedImageUrl}
+                  alt={post.heroImage?.alt || ''}
+                />
+              </a>
+            )}
+            <div class="post-card-body">
             <a href={post.path}>{post.title}</a>
             {post.publishedAt && (
               <div class="meta">{new Date(post.publishedAt).toLocaleDateString('en-US')}</div>
             )}
             {post.excerpt && <p>{post.excerpt}</p>}
+            </div>
           </li>
         ))}
       </ul>

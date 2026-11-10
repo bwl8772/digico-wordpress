@@ -1,0 +1,531 @@
+---
+interface Snapshot {
+  source: string
+  path: string
+  lang: string
+  title: string
+  description: string
+  canonical: string
+  bodyClass: string
+  head: string
+  body: string
+}
+
+interface Props {
+  page: Snapshot
+}
+
+const { page } = Astro.props
+---
+
+<!doctype html>
+<html lang={page.lang || 'en-US'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{page.title}</title>
+    {page.description && <meta name="description" content={page.description} />}
+    <link rel="canonical" href={page.canonical || new URL(page.path, Astro.site)} />
+    <Fragment set:html={page.head} />
+    <style is:global>
+      html, body { margin: 0; min-height: 100%; }
+      [data-static-form] button[type='submit'] { cursor: not-allowed; }
+      .dc-form-status { margin-top: 0.75rem; font: 600 0.95rem/1.5 system-ui, sans-serif; }
+
+      body.dc-lightbox-open { overflow: hidden; }
+
+      .dc-video-lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 999999;
+        display: grid;
+        place-items: center;
+        padding: clamp(1rem, 4vw, 3rem);
+        background: rgb(10 0 28 / 92%);
+      }
+
+      .dc-video-lightbox[hidden] { display: none; }
+
+      .dc-video-lightbox__panel {
+        position: relative;
+        width: min(1100px, 100%);
+        background: #080014;
+        box-shadow: 0 30px 90px rgb(0 0 0 / 55%);
+      }
+
+      .dc-video-lightbox__frame {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: 0;
+      }
+
+      .dc-video-lightbox__close {
+        position: absolute;
+        top: -2.75rem;
+        right: 0;
+        display: grid;
+        place-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0;
+        color: #fff;
+        font: 700 2rem/1 system-ui, sans-serif;
+        background: transparent;
+        border: 1px solid rgb(255 255 255 / 65%);
+        border-radius: 999px;
+        cursor: pointer;
+      }
+
+      .dc-video-lightbox__close:hover,
+      .dc-video-lightbox__close:focus-visible {
+        color: #160040;
+        background: #fed647;
+        border-color: #fed647;
+        outline: none;
+      }
+
+      .elementor-nav-menu--dropdown.elementor-active { display: block; }
+
+      .elementor-tab-content[hidden],
+      .dc-faq-answer[hidden],
+      .elementskit-accordion .collapse:not(.show) {
+        display: none !important;
+      }
+
+      .dc-faq-question { cursor: pointer; }
+
+      .dc-carousel-ready.swiper {
+        overflow: hidden;
+      }
+
+      .dc-carousel-ready > .swiper-wrapper {
+        display: flex;
+        align-items: stretch;
+        transition: transform 500ms ease;
+        will-change: transform;
+      }
+
+      .dc-carousel-ready > .swiper-wrapper > .swiper-slide {
+        flex: 0 0 auto;
+        height: auto;
+      }
+
+      .swiper-pagination button.swiper-pagination-bullet {
+        padding: 0;
+        border: 0;
+      }
+
+      @media (max-width: 1024px) {
+        .elementor-nav-menu .menu-item-has-children.is-submenu-open > .sub-menu {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body class={page.bodyClass} data-snapshot-source={page.source}>
+    <Fragment set:html={page.body} />
+    <script is:inline>
+      document.querySelectorAll('[data-static-form]').forEach((form) => {
+        form.addEventListener('submit', (event) => {
+          event.preventDefault()
+          let status = form.querySelector('.dc-form-status')
+          if (!status) {
+            status = document.createElement('p')
+            status.className = 'dc-form-status'
+            status.setAttribute('role', 'status')
+            form.append(status)
+          }
+          status.textContent = 'This preview form is not connected yet. No information was sent.'
+        })
+      })
+
+      document.querySelectorAll('.elementor-menu-toggle').forEach((toggle) => {
+        const toggleMenu = () => {
+          const menu = toggle.closest('.elementor-widget-nav-menu')
+          const dropdown = menu?.querySelector('.elementor-nav-menu--dropdown')
+          const open = toggle.getAttribute('aria-expanded') === 'true'
+          toggle.setAttribute('aria-expanded', String(!open))
+          toggle.classList.toggle('elementor-active', !open)
+          dropdown?.classList.toggle('elementor-active', !open)
+          dropdown?.setAttribute('aria-hidden', String(open))
+        }
+
+        toggle.addEventListener('click', toggleMenu)
+        toggle.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return
+          event.preventDefault()
+          toggleMenu()
+        })
+      })
+
+      document.querySelectorAll('.elementor-nav-menu .menu-item-has-children > a .sub-arrow').forEach((arrow) => {
+        arrow.addEventListener('click', (event) => {
+          if (!window.matchMedia('(max-width: 1024px)').matches) return
+          event.preventDefault()
+          event.stopPropagation()
+
+          const item = arrow.closest('.menu-item-has-children')
+          const link = arrow.closest('a')
+          const submenu = item?.querySelector(':scope > .sub-menu')
+          const open = item?.classList.contains('is-submenu-open') ?? false
+          item?.classList.toggle('is-submenu-open', !open)
+          link?.setAttribute('aria-expanded', String(!open))
+          submenu?.setAttribute('aria-hidden', String(open))
+        })
+      })
+
+      document.querySelectorAll('.elementor-accordion, .elementor-toggle').forEach((group) => {
+        const titles = [...group.querySelectorAll('.elementor-tab-title')]
+
+        const setOpen = (title, open) => {
+          const contentId = title.getAttribute('aria-controls')
+          const content = contentId ? document.getElementById(contentId) : null
+          title.classList.toggle('elementor-active', open)
+          title.setAttribute('aria-expanded', String(open))
+          title.setAttribute('aria-selected', String(open))
+          if (content) {
+            content.classList.toggle('elementor-active', open)
+            content.hidden = !open
+          }
+        }
+
+        for (const title of titles) {
+          setOpen(title, title.classList.contains('elementor-active'))
+          const togglePanel = () => {
+            const open = title.getAttribute('aria-expanded') === 'true'
+            if (!open && group.classList.contains('elementor-accordion')) {
+              for (const sibling of titles) setOpen(sibling, false)
+            }
+            setOpen(title, !open)
+          }
+
+          title.addEventListener('click', togglePanel)
+          title.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return
+            event.preventDefault()
+            togglePanel()
+          })
+        }
+      })
+
+      document.querySelectorAll('.elementskit-accordion').forEach((group) => {
+        const toggles = [...group.querySelectorAll('.ekit-accordion--toggler[data-target]')]
+
+        const setOpen = (toggle, open) => {
+          const selector = toggle.getAttribute('data-target')
+          const content = selector ? group.querySelector(selector) : null
+          toggle.setAttribute('aria-expanded', String(open))
+          toggle.classList.toggle('collapsed', !open)
+          toggle.closest('.elementskit-card')?.classList.toggle('active', open)
+          content?.classList.toggle('show', open)
+        }
+
+        for (const toggle of toggles) {
+          setOpen(toggle, toggle.getAttribute('aria-expanded') === 'true')
+          toggle.addEventListener('click', (event) => {
+            event.preventDefault()
+            const open = toggle.getAttribute('aria-expanded') === 'true'
+            for (const sibling of toggles) setOpen(sibling, false)
+            setOpen(toggle, !open)
+          })
+          toggle.addEventListener('keydown', (event) => {
+            if (event.key !== ' ' && event.key !== 'Enter') return
+            event.preventDefault()
+            toggle.click()
+          })
+        }
+      })
+
+      const fallbackFaqQuestions = [...document.querySelectorAll('a[tabindex="0"]:not([href])')]
+        .filter((item) => item.textContent?.trim().endsWith('?') || document.body.dataset.snapshotSource?.endsWith('/faq/'))
+
+      for (const [index, question] of fallbackFaqQuestions.entries()) {
+        const heading = question.closest('p')
+        if (!heading) continue
+
+        const answer = document.createElement('div')
+        answer.className = 'dc-faq-answer'
+        answer.id = `dc-faq-answer-${index + 1}`
+        answer.hidden = true
+        heading.after(answer)
+
+        let candidate = answer.nextElementSibling
+        while (candidate && !candidate.querySelector('a[tabindex="0"]:not([href])') && candidate.tagName !== 'H3') {
+          const next = candidate.nextElementSibling
+          answer.append(candidate)
+          candidate = next
+        }
+
+        question.classList.add('dc-faq-question')
+        question.setAttribute('role', 'button')
+        question.setAttribute('aria-controls', answer.id)
+        question.setAttribute('aria-expanded', 'false')
+
+        const toggleAnswer = () => {
+          const open = question.getAttribute('aria-expanded') === 'true'
+          question.setAttribute('aria-expanded', String(!open))
+          answer.hidden = open
+        }
+
+        question.addEventListener('click', toggleAnswer)
+        question.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return
+          event.preventDefault()
+          toggleAnswer()
+        })
+      }
+
+      document.querySelectorAll('.e-widget-swiper').forEach((widget) => {
+        const viewport = widget.querySelector('.swiper')
+        const track = viewport?.querySelector(':scope > .swiper-wrapper')
+        if (!(viewport instanceof HTMLElement) || !(track instanceof HTMLElement)) return
+
+        const renderedSlides = [...track.querySelectorAll(':scope > .swiper-slide')]
+        const originals = renderedSlides.filter((slide) => !slide.classList.contains('swiper-slide-duplicate'))
+        const candidates = originals.length ? originals : renderedSlides
+        const slides = []
+        const indexes = new Set()
+
+        for (const slide of candidates) {
+          const index = slide.getAttribute('data-swiper-slide-index') || String(slides.length)
+          if (indexes.has(index)) {
+            slide.remove()
+            continue
+          }
+          indexes.add(index)
+          slides.push(slide)
+        }
+
+        for (const slide of renderedSlides) {
+          if (!slides.includes(slide)) slide.remove()
+        }
+
+        if (!slides.length) return
+
+        let settings = {}
+        try {
+          settings = JSON.parse(widget.getAttribute('data-settings') || '{}')
+        } catch {
+          settings = {}
+        }
+
+        let current = 0
+        let autoplayTimer = null
+        const pagination = widget.querySelector('.swiper-pagination')
+        const previous = widget.querySelector('.elementor-swiper-button-prev, .swiper-button-prev')
+        const next = widget.querySelector('.elementor-swiper-button-next, .swiper-button-next')
+
+        viewport.classList.add('dc-carousel-ready')
+        track.removeAttribute('style')
+        for (const slide of slides) {
+          slide.classList.remove(
+            'swiper-slide-duplicate',
+            'swiper-slide-duplicate-active',
+            'swiper-slide-duplicate-next',
+            'swiper-slide-duplicate-prev',
+          )
+          slide.removeAttribute('inert')
+          slide.removeAttribute('aria-hidden')
+          slide.removeAttribute('style')
+        }
+
+        const numberSetting = (value, fallback) => {
+          const parsed = Number(value)
+          return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback
+        }
+
+        const layout = () => {
+          const mobile = window.matchMedia('(max-width: 767px)').matches
+          const tablet = !mobile && window.matchMedia('(max-width: 1024px)').matches
+          const defaultPerView = widget.getAttribute('data-widget_type') === 'slides.default' ? 1 : 3
+          const perView = Math.min(
+            slides.length,
+            numberSetting(
+              mobile
+                ? settings.slides_per_view_mobile || settings.slides_to_show_mobile
+                : tablet
+                  ? settings.slides_per_view_tablet || settings.slides_to_show_tablet
+                  : settings.slides_per_view || settings.slides_to_show,
+              mobile ? 1 : tablet ? 2 : defaultPerView,
+            ),
+          )
+          const spacing = mobile
+            ? settings.space_between_mobile?.size || settings.image_spacing_custom_mobile?.size
+            : tablet
+              ? settings.space_between_tablet?.size || settings.image_spacing_custom_tablet?.size
+              : settings.space_between?.size || settings.image_spacing_custom?.size
+          const gap = numberSetting(spacing, 0)
+          const width = (viewport.clientWidth - gap * (perView - 1)) / perView
+          const maximum = Math.max(0, slides.length - perView)
+          current = Math.min(current, maximum)
+
+          track.style.gap = `${gap}px`
+          track.style.transform = `translate3d(${-current * (width + gap)}px, 0, 0)`
+          for (const [index, slide] of slides.entries()) {
+            slide.style.width = `${width}px`
+            slide.classList.toggle('swiper-slide-active', index === current)
+            slide.classList.toggle('swiper-slide-next', index === current + 1)
+            slide.classList.toggle('swiper-slide-prev', index === current - 1)
+          }
+
+          if (pagination) {
+            pagination.innerHTML = ''
+            for (let index = 0; index <= maximum; index += 1) {
+              const bullet = document.createElement('button')
+              bullet.type = 'button'
+              bullet.className = 'swiper-pagination-bullet'
+              bullet.classList.toggle('swiper-pagination-bullet-active', index === current)
+              bullet.setAttribute('aria-label', `Go to slide ${index + 1}`)
+              if (index === current) bullet.setAttribute('aria-current', 'true')
+              bullet.addEventListener('click', () => {
+                current = index
+                layout()
+              })
+              pagination.append(bullet)
+            }
+          }
+
+          previous?.classList.toggle('swiper-button-disabled', current === 0)
+          next?.classList.toggle('swiper-button-disabled', current === maximum)
+          previous?.setAttribute('aria-disabled', String(current === 0))
+          next?.setAttribute('aria-disabled', String(current === maximum))
+          return maximum
+        }
+
+        const move = (direction) => {
+          const maximum = layout()
+          current = direction > 0
+            ? current >= maximum ? 0 : current + 1
+            : current <= 0 ? maximum : current - 1
+          layout()
+        }
+
+        previous?.addEventListener('click', () => move(-1))
+        next?.addEventListener('click', () => move(1))
+        viewport.setAttribute('tabindex', '0')
+        viewport.addEventListener('keydown', (event) => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+          event.preventDefault()
+          move(event.key === 'ArrowLeft' ? -1 : 1)
+        })
+
+        if (settings.autoplay === 'yes') {
+          const delay = numberSetting(settings.autoplay_speed, 5000)
+          const startAutoplay = () => {
+            if (autoplayTimer !== null) window.clearInterval(autoplayTimer)
+            autoplayTimer = window.setInterval(() => move(1), delay)
+          }
+          const stopAutoplay = () => {
+            if (autoplayTimer !== null) window.clearInterval(autoplayTimer)
+            autoplayTimer = null
+          }
+          viewport.addEventListener('mouseenter', stopAutoplay)
+          viewport.addEventListener('mouseleave', startAutoplay)
+          viewport.addEventListener('focusin', stopAutoplay)
+          viewport.addEventListener('focusout', startAutoplay)
+          startAutoplay()
+        }
+
+        new ResizeObserver(layout).observe(viewport)
+        layout()
+      })
+
+      let lastLightboxTrigger = null
+
+      const lightbox = document.createElement('div')
+      lightbox.className = 'dc-video-lightbox'
+      lightbox.hidden = true
+      lightbox.setAttribute('role', 'dialog')
+      lightbox.setAttribute('aria-modal', 'true')
+      lightbox.setAttribute('aria-label', 'Video player')
+      lightbox.innerHTML = `
+        <div class="dc-video-lightbox__panel">
+          <button class="dc-video-lightbox__close" type="button" aria-label="Close video">×</button>
+          <iframe
+            class="dc-video-lightbox__frame"
+            title="Digital Command video"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      `
+      document.body.append(lightbox)
+
+      const lightboxFrame = lightbox.querySelector('.dc-video-lightbox__frame')
+      const lightboxClose = lightbox.querySelector('.dc-video-lightbox__close')
+
+      function videoUrlFromElementorAction(href) {
+        try {
+          const target = new URL(href, window.location.href)
+          const action = decodeURIComponent(target.hash.slice(1))
+          if (!action.startsWith('elementor-action:')) return null
+
+          const parameters = new URLSearchParams(action.slice('elementor-action:'.length))
+          if (parameters.get('action') !== 'lightbox') return null
+
+          const encodedSettings = parameters.get('settings')
+          if (!encodedSettings) return null
+
+          const settings = JSON.parse(atob(encodedSettings))
+          const video = new URL(settings.url)
+          const allowedHosts = new Set([
+            'www.youtube.com',
+            'youtube.com',
+            'www.youtube-nocookie.com',
+            'player.vimeo.com',
+          ])
+          if (video.protocol !== 'https:' || !allowedHosts.has(video.hostname)) return null
+
+          video.searchParams.set('autoplay', '1')
+          return video.toString()
+        } catch {
+          return null
+        }
+      }
+
+      function openVideoLightbox(videoUrl, trigger) {
+        if (!(lightboxFrame instanceof HTMLIFrameElement)) return
+        lastLightboxTrigger = trigger instanceof HTMLElement ? trigger : null
+        lightboxFrame.src = videoUrl
+        lightbox.hidden = false
+        document.body.classList.add('dc-lightbox-open')
+        if (lightboxClose instanceof HTMLElement) lightboxClose.focus()
+      }
+
+      function closeVideoLightbox() {
+        if (lightboxFrame instanceof HTMLIFrameElement) lightboxFrame.src = 'about:blank'
+        lightbox.hidden = true
+        document.body.classList.remove('dc-lightbox-open')
+        if (lastLightboxTrigger instanceof HTMLElement) lastLightboxTrigger.focus()
+        lastLightboxTrigger = null
+
+        if (decodeURIComponent(window.location.hash.slice(1)).startsWith('elementor-action:')) {
+          history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
+        }
+      }
+
+      document.addEventListener('click', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('a[href]') : null
+        if (!(trigger instanceof HTMLAnchorElement)) return
+
+        const videoUrl = videoUrlFromElementorAction(trigger.href)
+        if (!videoUrl) return
+
+        event.preventDefault()
+        openVideoLightbox(videoUrl, trigger)
+      })
+
+      lightboxClose?.addEventListener('click', closeVideoLightbox)
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeVideoLightbox()
+      })
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !lightbox.hidden) closeVideoLightbox()
+      })
+
+      const initialVideoUrl = videoUrlFromElementorAction(window.location.href)
+      if (initialVideoUrl) openVideoLightbox(initialVideoUrl, null)
+    </script>
+  </body>
+</html>

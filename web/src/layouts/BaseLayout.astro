@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css'
+import SiteFooter from '../components/SiteFooter.astro'
+import SiteHeader from '../components/SiteHeader.astro'
 
 interface Seo {
   title?: string | null
@@ -33,8 +35,10 @@ const canonical = seo?.canonicalUrl || new URL(Astro.url.pathname, Astro.site).t
     {seo?.noIndex && <meta name="robots" content="noindex, nofollow" />}
   </head>
   <body>
-    <div class="wrap">
+    <SiteHeader />
+    <div class="site-main">
       <slot />
     </div>
+    <SiteFooter />
   </body>
 </html>

@@ -27,8 +27,10 @@ Studio is at `http://localhost:3333`. The Astro site is at `http://localhost:432
 
 ## Page ownership
 
-- **Core website pages:** committed as explicit Astro routes in `web/src/pages`.
+- **Core website pages:** the homepage and every live header-navigation destination are committed as explicit Astro routes in `web/src/pages`.
 - **Marketing landing pages:** authored as `marketingPage` documents in Sanity and rendered by Astro's catch-all route.
 - **Editorial posts:** authored in Sanity and rendered through the same catch-all to preserve legacy WordPress URLs.
 
 Astro's static routes take priority over its catch-all. The Sanity Studio also prevents marketing documents from using reserved core paths, and the web build fails on duplicate routable paths.
+
+See [route ownership](docs/ROUTE_OWNERSHIP.md) for the WordPress IDs and complete classification. Core-page snapshots are an interim parity baseline: tracking scripts and live submissions are removed, but some visual styles and media still reference public WordPress assets until the asset migration is complete.

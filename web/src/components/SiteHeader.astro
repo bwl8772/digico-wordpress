@@ -1,0 +1,79 @@
+---
+const solutions = [
+  ['/launchpad', 'AI Launchpad'],
+  ['/consulting', 'Consulting'],
+  ['/get-navi', 'Navi AI Orchestrator'],
+  ['/change-management', 'Resiliency Services'],
+  ['/expert-network', 'Expert Network'],
+  ['/digital-training', 'Digital Skills Training'],
+]
+
+const resources = [
+  ['/events', 'Events'],
+  ['/webinars', 'Webinars'],
+  ['/blog', 'Blogs'],
+  ['/digital-academy', 'Academy'],
+  ['/fellowship', 'Digital Fellowship'],
+]
+
+const about = [
+  ['/our-story', 'Our Story'],
+  ['https://www.drbrianlambert.com', 'Dr. Brian Lambert'],
+  ['/faq', 'FAQs'],
+  ['/contact', 'Contact'],
+]
+---
+
+<header class="site-header">
+  <a class="site-logo" href="/" aria-label="Digital Command home">
+    <img src="/images/digital-command-white.png" alt="Digital Command" width="300" height="84" />
+  </a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+    <span class="sr-only">Toggle navigation</span>
+    <span></span><span></span><span></span>
+  </button>
+  <nav id="primary-navigation" class="primary-nav" aria-label="Primary navigation">
+    <ul>
+      <li class="nav-parent">
+        <a href="/solutions">Solutions</a>
+        <button class="submenu-toggle" type="button" aria-expanded="false"><span class="sr-only">Toggle Solutions submenu</span>▾</button>
+        <ul class="submenu">
+          {solutions.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
+        </ul>
+      </li>
+      <li class="nav-parent">
+        <a href="/resources">Resources</a>
+        <button class="submenu-toggle" type="button" aria-expanded="false"><span class="sr-only">Toggle Resources submenu</span>▾</button>
+        <ul class="submenu">
+          {resources.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
+        </ul>
+      </li>
+      <li class="nav-parent">
+        <a href="/about-us">About</a>
+        <button class="submenu-toggle" type="button" aria-expanded="false"><span class="sr-only">Toggle About submenu</span>▾</button>
+        <ul class="submenu">
+          {about.map(([href, label]) => <li><a href={href}>{label}</a></li>)}
+        </ul>
+      </li>
+      <li><a href="/230k-by-2030">230k by 2030</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const navToggle = document.querySelector<HTMLButtonElement>('.nav-toggle')
+  const navigation = document.querySelector<HTMLElement>('#primary-navigation')
+  navToggle?.addEventListener('click', () => {
+    const open = navToggle.getAttribute('aria-expanded') === 'true'
+    navToggle.setAttribute('aria-expanded', String(!open))
+    navigation?.classList.toggle('is-open', !open)
+  })
+
+  document.querySelectorAll<HTMLButtonElement>('.submenu-toggle').forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true'
+      toggle.setAttribute('aria-expanded', String(!open))
+      toggle.closest('.nav-parent')?.classList.toggle('is-open', !open)
+    })
+  })
+</script>

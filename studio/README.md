@@ -4,7 +4,7 @@ Standalone Studio for Digital Command marketing landing pages, posts, authors, c
 
 ## Setup
 
-Use Node 22.12 or later.
+Use Node 24.22.1 (Volta pin).
 
 ```sh
 npm install

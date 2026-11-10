@@ -5,7 +5,28 @@ import {
   ROUTABLE_CONTENT_PATHS_QUERY,
 } from './queries'
 
-export const CORE_PAGE_PATHS = ['/', '/blog', '/404'] as const
+export const CORE_PAGE_PATHS = [
+  '/',
+  '/solutions',
+  '/launchpad',
+  '/consulting',
+  '/get-navi',
+  '/change-management',
+  '/expert-network',
+  '/digital-training',
+  '/resources',
+  '/events',
+  '/webinars',
+  '/blog',
+  '/digital-academy',
+  '/fellowship',
+  '/about-us',
+  '/our-story',
+  '/faq',
+  '/contact',
+  '/230k-by-2030',
+  '/404',
+] as const
 
 export function normalizeSitePath(path = '') {
   const trimmed = path.replace(/^\/+|\/+$/g, '')

@@ -1,6 +1,27 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
-const CORE_PAGE_PATHS = ['/', '/blog', '/404'] as const
+const CORE_PAGE_PATHS = [
+  '/',
+  '/solutions',
+  '/launchpad',
+  '/consulting',
+  '/get-navi',
+  '/change-management',
+  '/expert-network',
+  '/digital-training',
+  '/resources',
+  '/events',
+  '/webinars',
+  '/blog',
+  '/digital-academy',
+  '/fellowship',
+  '/about-us',
+  '/our-story',
+  '/faq',
+  '/contact',
+  '/230k-by-2030',
+  '/404',
+] as const
 const ROUTABLE_DOCUMENT_TYPES = ['marketingPage', 'post', 'category'] as const
 
 function normalizePath(path: string) {
@@ -22,7 +43,7 @@ function pathField(title = 'Original site path') {
           if (!value || typeof value !== 'string') return true
 
           const path = normalizePath(value)
-          if (context.document?._type === 'marketingPage' && CORE_PAGE_PATHS.includes(path as (typeof CORE_PAGE_PATHS)[number])) {
+          if (CORE_PAGE_PATHS.includes(path as (typeof CORE_PAGE_PATHS)[number])) {
             return `${path} is owned by Astro. Add or edit that page in web/src/pages instead.`
           }
 
@@ -107,6 +128,8 @@ const marketingPage = defineType({
   fields: [
     ...sharedFields,
     defineField({ name: 'body', title: 'Content', type: 'richText' }),
+    defineField({ name: 'legacyHtml', title: 'Imported WordPress HTML', type: 'text', rows: 12, readOnly: true, description: 'Sanitized migration source. Replace with structured content as pages are redesigned.' }),
+    defineField({ name: 'legacyTemplate', title: 'WordPress template', type: 'string', readOnly: true }),
   ],
   preview: { select: { title: 'title', subtitle: 'path' } },
 })
@@ -139,7 +162,9 @@ const post = defineType({
     defineField({ name: 'categories', title: 'Categories', type: 'array', of: [defineArrayMember({ type: 'reference', to: [{ type: 'category' }] })] }),
     defineField({ name: 'excerpt', title: 'Excerpt', type: 'text', rows: 3 }),
     defineField({ name: 'heroImage', title: 'Featured image', type: 'figure' }),
+    defineField({ name: 'legacyFeaturedImageUrl', title: 'Imported featured image URL', type: 'url', readOnly: true }),
     defineField({ name: 'body', title: 'Article', type: 'richText' }),
+    defineField({ name: 'legacyHtml', title: 'Imported WordPress HTML', type: 'text', rows: 12, readOnly: true, description: 'Sanitized migration source. Replace with Portable Text after import review.' }),
   ],
   preview: { select: { title: 'title', subtitle: 'path', media: 'heroImage' } },
 })

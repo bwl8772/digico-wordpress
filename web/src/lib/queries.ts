@@ -31,6 +31,8 @@ export const ROUTABLE_CONTENT_BY_PATH_QUERY = defineQuery(/* groq */ `
     "authorName": author->name,
     heroImage { ${figureFields} },
     ${seoFields},
+    legacyHtml,
+    legacyFeaturedImageUrl,
     body
   }
 `)
@@ -43,7 +45,8 @@ export const POSTS_QUERY = defineQuery(/* groq */ `
     excerpt,
     publishedAt,
     "authorName": author->name,
-    heroImage { ${figureFields} }
+    heroImage { ${figureFields} },
+    legacyFeaturedImageUrl
   }
 `)
 

@@ -49,7 +49,9 @@ export type Post = {
   >;
   excerpt?: string;
   heroImage?: Figure;
+  legacyFeaturedImageUrl?: string;
   body?: RichText;
+  legacyHtml?: string;
 };
 
 export type RichText = Array<
@@ -104,7 +106,7 @@ export type Category = {
   _updatedAt: string;
   _rev: string;
   title: string;
-  path?: string;
+  path: string;
   wordpressId?: number;
 };
 
@@ -120,9 +122,9 @@ export type Author = {
   wordpressId?: number;
 };
 
-export type Page = {
+export type MarketingPage = {
   _id: string;
-  _type: "page";
+  _type: "marketingPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -132,6 +134,8 @@ export type Page = {
   sourceUrl?: string;
   seo?: Seo;
   body?: RichText;
+  legacyHtml?: string;
+  legacyTemplate?: string;
 };
 
 export type Seo = {
@@ -285,7 +289,7 @@ export type AllSanitySchemaTypes =
   | Figure
   | Category
   | Author
-  | Page
+  | MarketingPage
   | Seo
   | VideoEmbed
   | SanityImageCrop
@@ -301,36 +305,12 @@ export type AllSanitySchemaTypes =
   | Slug;
 
 // Source: ../web/src/lib/queries.ts
-// Variable: PAGE_BY_PATH_QUERY
-// Query: *[_type == "page" && path == $path][0]{    _id,    _type,    title,    path,      seo {    title,    description,    canonicalUrl,    noIndex,    socialImage {      alt,      asset->{ _id, url }    }  },    body  }
-export type PAGE_BY_PATH_QUERY_RESULT = {
-  _id: string;
-  _type: "page";
-  title: string;
-  path: string;
-  seo: {
-    title: string | null;
-    description: string | null;
-    canonicalUrl: string | null;
-    noIndex: boolean | null;
-    socialImage: {
-      alt: null;
-      asset: {
-        _id: string;
-        url: string;
-      } | null;
-    } | null;
-  } | null;
-  body: RichText | null;
-} | null;
-
-// Source: ../web/src/lib/queries.ts
-// Variable: CONTENT_BY_PATH_QUERY
-// Query: *[(_type == "page" || _type == "post") && path == $path][0]{    _id,    _type,    title,    path,    excerpt,    publishedAt,    "authorName": author->name,    heroImage {   alt,  caption,  sourceUrl,  asset->{ _id, url, metadata { lqip, dimensions } } },      seo {    title,    description,    canonicalUrl,    noIndex,    socialImage {      alt,      asset->{ _id, url }    }  },    body  }
-export type CONTENT_BY_PATH_QUERY_RESULT =
+// Variable: ROUTABLE_CONTENT_BY_PATH_QUERY
+// Query: *[(_type == "marketingPage" || _type == "post") && path == $path && !(path in $corePaths)][0]{    _id,    _type,    title,    path,    excerpt,    publishedAt,    "authorName": author->name,    heroImage {   alt,  caption,  sourceUrl,  asset->{ _id, url, metadata { lqip, dimensions } } },      seo {    title,    description,    canonicalUrl,    noIndex,    socialImage {      alt,      asset->{ _id, url }    }  },    legacyHtml,    legacyFeaturedImageUrl,    body  }
+export type ROUTABLE_CONTENT_BY_PATH_QUERY_RESULT =
   | {
       _id: string;
-      _type: "page";
+      _type: "marketingPage";
       title: string;
       path: string;
       excerpt: null;
@@ -350,6 +330,8 @@ export type CONTENT_BY_PATH_QUERY_RESULT =
           } | null;
         } | null;
       } | null;
+      legacyHtml: string | null;
+      legacyFeaturedImageUrl: null;
       body: RichText | null;
     }
   | {
@@ -386,13 +368,15 @@ export type CONTENT_BY_PATH_QUERY_RESULT =
           } | null;
         } | null;
       } | null;
+      legacyHtml: string | null;
+      legacyFeaturedImageUrl: string | null;
       body: RichText | null;
     }
   | null;
 
 // Source: ../web/src/lib/queries.ts
 // Variable: POSTS_QUERY
-// Query: *[_type == "post" && defined(path)] | order(publishedAt desc) {    _id,    title,    path,    excerpt,    publishedAt,    "authorName": author->name,    heroImage {   alt,  caption,  sourceUrl,  asset->{ _id, url, metadata { lqip, dimensions } } }  }
+// Query: *[_type == "post" && defined(path)] | order(publishedAt desc) {    _id,    title,    path,    excerpt,    publishedAt,    "authorName": author->name,    heroImage {   alt,  caption,  sourceUrl,  asset->{ _id, url, metadata { lqip, dimensions } } },    legacyFeaturedImageUrl  }
 export type POSTS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -413,22 +397,31 @@ export type POSTS_QUERY_RESULT = Array<{
       } | null;
     } | null;
   } | null;
+  legacyFeaturedImageUrl: string | null;
 }>;
 
 // Source: ../web/src/lib/queries.ts
-// Variable: CONTENT_PATHS_QUERY
-// Query: *[(_type == "page" || _type == "post") && defined(path) && path != "/"]{    path  }
-export type CONTENT_PATHS_QUERY_RESULT = Array<{
-  path: string;
-}>;
+// Variable: ROUTABLE_CONTENT_PATHS_QUERY
+// Query: *[(_type == "marketingPage" || _type == "post") && defined(path) && !(path in $corePaths)]{    _id,    _type,    path  }
+export type ROUTABLE_CONTENT_PATHS_QUERY_RESULT = Array<
+  | {
+      _id: string;
+      _type: "marketingPage";
+      path: string;
+    }
+  | {
+      _id: string;
+      _type: "post";
+      path: string;
+    }
+>;
 
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    '\n  *[_type == "page" && path == $path][0]{\n    _id,\n    _type,\n    title,\n    path,\n    \n  seo {\n    title,\n    description,\n    canonicalUrl,\n    noIndex,\n    socialImage {\n      alt,\n      asset->{ _id, url }\n    }\n  }\n,\n    body\n  }\n': PAGE_BY_PATH_QUERY_RESULT;
-    '\n  *[(_type == "page" || _type == "post") && path == $path][0]{\n    _id,\n    _type,\n    title,\n    path,\n    excerpt,\n    publishedAt,\n    "authorName": author->name,\n    heroImage { \n  alt,\n  caption,\n  sourceUrl,\n  asset->{ _id, url, metadata { lqip, dimensions } }\n },\n    \n  seo {\n    title,\n    description,\n    canonicalUrl,\n    noIndex,\n    socialImage {\n      alt,\n      asset->{ _id, url }\n    }\n  }\n,\n    body\n  }\n': CONTENT_BY_PATH_QUERY_RESULT;
-    '\n  *[_type == "post" && defined(path)] | order(publishedAt desc) {\n    _id,\n    title,\n    path,\n    excerpt,\n    publishedAt,\n    "authorName": author->name,\n    heroImage { \n  alt,\n  caption,\n  sourceUrl,\n  asset->{ _id, url, metadata { lqip, dimensions } }\n }\n  }\n': POSTS_QUERY_RESULT;
-    '\n  *[(_type == "page" || _type == "post") && defined(path) && path != "/"]{\n    path\n  }\n': CONTENT_PATHS_QUERY_RESULT;
+    '\n  *[(_type == "marketingPage" || _type == "post") && path == $path && !(path in $corePaths)][0]{\n    _id,\n    _type,\n    title,\n    path,\n    excerpt,\n    publishedAt,\n    "authorName": author->name,\n    heroImage { \n  alt,\n  caption,\n  sourceUrl,\n  asset->{ _id, url, metadata { lqip, dimensions } }\n },\n    \n  seo {\n    title,\n    description,\n    canonicalUrl,\n    noIndex,\n    socialImage {\n      alt,\n      asset->{ _id, url }\n    }\n  }\n,\n    legacyHtml,\n    legacyFeaturedImageUrl,\n    body\n  }\n': ROUTABLE_CONTENT_BY_PATH_QUERY_RESULT;
+    '\n  *[_type == "post" && defined(path)] | order(publishedAt desc) {\n    _id,\n    title,\n    path,\n    excerpt,\n    publishedAt,\n    "authorName": author->name,\n    heroImage { \n  alt,\n  caption,\n  sourceUrl,\n  asset->{ _id, url, metadata { lqip, dimensions } }\n },\n    legacyFeaturedImageUrl\n  }\n': POSTS_QUERY_RESULT;
+    '\n  *[(_type == "marketingPage" || _type == "post") && defined(path) && !(path in $corePaths)]{\n    _id,\n    _type,\n    path\n  }\n': ROUTABLE_CONTENT_PATHS_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too
